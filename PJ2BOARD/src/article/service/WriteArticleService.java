@@ -59,6 +59,6 @@ public class WriteArticleService {
 	// Article데이터에 WriteRequest의 정보를 적용하고 작성시간과 수정시간을 현재시간으로 적용 후 반환
 	private Article toArticle(WriteRequest req) {
 		Date now = new Date();
-		return new Article(null, req.getWriter(), req.getTitle(), now, now, 0);
+		return new Article(null, req.getWriter(), req.getTitle(), now, now, 0, 0);
 	}
 }

@@ -19,6 +19,7 @@
 	<a href="logout.do">[로그아웃하기]</a>
 	<a href="article/list.do">[게시판목록]</a>
 	<a href="changePwd.do">[암호변경하기]</a>
+	<a href="deleteMember.do">[회원탈퇴하기]</a>
 </c:if>
 
 <br>

@@ -10,14 +10,16 @@ public class Article {
 	private Date regDate;	// 작성 일자
 	private Date modDate;	// 수정 일자
 	private int readCount;	// 조회수
+	private int likeCount;  // 좋아요
 	
-	public Article(Integer number, Writer writer, String title, Date regDate, Date modDate, int readCount) {
+	public Article(Integer number, Writer writer, String title, Date regDate, Date modDate, int readCount, int likeCount) {
 		this.number = number;
 		this.writer = writer;
 		this.title = title;
 		this.regDate = regDate;
 		this.modDate = modDate;
 		this.readCount = readCount;
+		this.likeCount = likeCount;
 	}
 
 	public Integer getNumber() {
@@ -42,5 +44,9 @@ public class Article {
 
 	public int getReadCount() {
 		return readCount;
+	}
+	
+	public int getLikeCount() {
+		return likeCount;
 	}
 }

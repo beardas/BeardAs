@@ -57,4 +57,11 @@ public class MemberDao {
 			pstmt.executeUpdate();
 		}
 	}
+	
+	public void delete(Connection conn, String id) throws SQLException {
+		try(PreparedStatement pstmt = conn.prepareStatement("delete from member where memberid = ?")) {
+			pstmt.setString(1, id);
+			pstmt.executeUpdate();
+		}
+	}
 }

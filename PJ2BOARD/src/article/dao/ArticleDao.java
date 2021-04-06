@@ -23,7 +23,7 @@ public class ArticleDao {
 		
 		try {
 			pstmt = conn.prepareStatement("insert into article " +
-		"(writer_id, writer_name, title, regdate, moddate, read_cnt) " + "values (?,?,?,?,?,0)");
+		"(writer_id, writer_name, title, regdate, moddate, read_cnt, article_like) " + "values (?,?,?,?,?,0,0)");
 			pstmt.setString(1, article.getWriter().getId());
 			pstmt.setString(2, article.getWriter().getName());
 			pstmt.setString(3, article.getTitle());
@@ -38,7 +38,7 @@ public class ArticleDao {
 				if(rs.next()) {
 					Integer newNum = rs.getInt(1);	// 게시글 번호를 1부터 차근차근 올려줌
 					return new Article(newNum, article.getWriter(), article.getTitle(),
-							article.getRegDate(), article.getModDate(), 0);
+							article.getRegDate(), article.getModDate(), 0, 0);
 				}
 			}
 			return null;
@@ -98,7 +98,8 @@ public class ArticleDao {
 				rs.getString("title"),
 				toDate(rs.getTimestamp("regdate")), 
 				toDate(rs.getTimestamp("moddate")),
-				rs.getInt("read_cnt"));
+				rs.getInt("read_cnt"),
+				rs.getInt("article_like"));
 	}
 	
 	private Date toDate(Timestamp timestamp) {
@@ -130,6 +131,28 @@ public class ArticleDao {
 			pstmt.executeUpdate();
 		}
 	}
+	
+	
+	public Integer increaseLikeCount(Connection conn, int no) throws SQLException {
+		PreparedStatement pstmt = null;
+		try {
+			pstmt = conn.prepareStatement("update article set article_like = article_like + 1 " +
+					"where article_no = ?");
+			pstmt.setInt(1, no);
+			return pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(pstmt != null) pstmt.close();
+				if(conn != null) conn.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return -1;
+	}
+	
 	
 	public int update(Connection conn, int no, String title) throws SQLException {
 		try (PreparedStatement pstmt = 

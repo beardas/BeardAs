@@ -8,6 +8,7 @@
 </head>
 <body>
 ${param.name}님, 회원 가입을 축하합니다.
+<a href="login.do">[로그인하기]</a>
 <br>
 </body>
 </html>
