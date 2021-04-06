@@ -17,7 +17,7 @@
 <c:if test="${!empty user}">
 	${user.name}님, 안녕하세요.
 	<a href="logout.do">[로그아웃하기]</a>
-	<a href="article.list.do">[게시판목록]</a>
+	<a href="article/list.do">[게시판목록]</a>
 	<a href="changePwd.do">[암호변경하기]</a>
 </c:if>
 
