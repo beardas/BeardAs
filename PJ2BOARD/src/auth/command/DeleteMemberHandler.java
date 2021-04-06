@@ -53,8 +53,7 @@ public class DeleteMemberHandler implements CommandHandler {
 		
 		try {
 			deleteMemberService.delete(id, pw); // 회원탈퇴 메서드 실행
-			res.sendRedirect(req.getContextPath() + "/index.jsp"); // http://localhost:9993/PJ2BOARD + /index.jsp
-			return null;
+			return "/WEB-INF/view/deleteMemberSuccess.jsp";
 		} catch (InvalideIdException e) {
 			errors.put("idOrPwNotMatch", Boolean.TRUE);
 			return FORM_VIEW;
