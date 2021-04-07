@@ -32,6 +32,8 @@ public class JoinService {
 			memberDao.insert(conn, new Member(joinReq.getId(),
 					joinReq.getName(),
 					joinReq.getPassword(),
+					joinReq.getEmail(),
+					joinReq.getPhone(),
 					new Date()));
 			conn.commit();
 			

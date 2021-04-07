@@ -15,16 +15,18 @@ import mvc.command.CommandHandler;
 public class WriteArticleHandler implements CommandHandler {
 	
 	private static final String FORM_VIEW = "/WEB-INF/view/writeArticleForm.jsp";
-	private WriteArticleService writeArticleService = new WriteArticleService();
+	private WriteArticleService writeService = new WriteArticleService();
 	
 	@Override
 	public String process(HttpServletRequest req, HttpServletResponse res) throws Exception {
-		if(req.getMethod().equalsIgnoreCase("GET")) {
+		// equals : 같은 값 확인 시, 대소문자 구분
+		// equalsIgnoreCase : 같은 값 확인 시, 대소문자를 구분하지 않음
+		if(req.getMethod().equalsIgnoreCase("GET")) { 
 			return processForm(req, res);
-		} else if(req.getMethod().equalsIgnoreCase("POST")) {
+		} else if (req.getMethod().equalsIgnoreCase("POST")) {
 			return processSubmit(req, res);
 		} else {
-			res.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
+			res.setStatus(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
 			return null;
 		}
 	}
@@ -34,13 +36,10 @@ public class WriteArticleHandler implements CommandHandler {
 	}
 	
 	private String processSubmit(HttpServletRequest req, HttpServletResponse res) {
-		
-		Map<String, Boolean> errors = new HashMap<String, Boolean>();
+		Map<String, Boolean> errors = new HashMap<>();
 		req.setAttribute("errors", errors);
 		
 		User user = (User)req.getSession(false).getAttribute("user");
-		
-		// 현재 로그인 되어있는 유저(아이디, 이름) 정보와 작성한 내용(제목, 내용)을 받아옴
 		WriteRequest writeReq = createWriteRequest(user, req);
 		writeReq.validate(errors);
 		
@@ -48,8 +47,7 @@ public class WriteArticleHandler implements CommandHandler {
 			return FORM_VIEW;
 		}
 		
-		// write 메소드 실행 -> 새로운 글 번호가 반환되어 들어옴
-		int newArticleNo = writeArticleService.write(writeReq);
+		int newArticleNo = writeService.write(writeReq);
 		req.setAttribute("newArticleNo", newArticleNo);
 		
 		return "/WEB-INF/view/writeArticleSuccess.jsp";
@@ -57,7 +55,7 @@ public class WriteArticleHandler implements CommandHandler {
 	
 	private WriteRequest createWriteRequest(User user, HttpServletRequest req) {
 		return new WriteRequest(new Writer(user.getId(), user.getName()),
-				req.getParameter("title"), req.getParameter("content"));
+				req.getParameter("title"),
+				req.getParameter("content"));
 	}
-	
 }

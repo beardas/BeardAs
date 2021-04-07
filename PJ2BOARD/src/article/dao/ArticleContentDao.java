@@ -12,24 +12,19 @@ public class ArticleContentDao {
 
 	public ArticleContent insert(Connection conn, ArticleContent content) throws SQLException {
 		PreparedStatement pstmt = null;
-		
 		try {
-			pstmt = conn.prepareStatement("insert into article_content " +
-		"(article_no, content) " + "values (?,?)");
+			pstmt = conn.prepareStatement("insert into article_content " + "(article_no, content) values(?,?)");
 			pstmt.setLong(1, content.getNumber());
 			pstmt.setString(2, content.getContent());
 			int insertedCount = pstmt.executeUpdate();
 			
-			if(insertedCount > 0) {
-					return content;
-			} else {
-				return null;
-			}
+			if(insertedCount > 0) return content;
 			
-		} finally {
+			else return null;
+			
+		} finally { 
 			JdbcUtil.close(pstmt);
 		}
-		
 	}
 	
 	public ArticleContent selectById(Connection conn, int no) throws SQLException {
@@ -72,5 +67,3 @@ public class ArticleContentDao {
 		}
 	}
 }
-	
-

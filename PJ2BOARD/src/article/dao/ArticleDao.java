@@ -15,45 +15,44 @@ import article.model.Writer;
 import jdbc.JdbcUtil;
 
 public class ArticleDao {
-	
+
 	public Article insert(Connection conn, Article article) throws SQLException {
 		PreparedStatement pstmt = null;
 		Statement stmt = null;
 		ResultSet rs = null;
-		
 		try {
-			pstmt = conn.prepareStatement("insert into article " +
-		"(writer_id, writer_name, title, regdate, moddate, read_cnt, article_like) " + "values (?,?,?,?,?,0,0)");
+			pstmt = conn.prepareStatement("insert into article " + 
+		"(writer_id, writer_name, title, regdate, moddate, read_cnt) " + "values(?,?,?,?,?,0)");
 			pstmt.setString(1, article.getWriter().getId());
 			pstmt.setString(2, article.getWriter().getName());
 			pstmt.setString(3, article.getTitle());
 			pstmt.setTimestamp(4, toTimestamp(article.getRegDate()));
-			pstmt.setTimestamp(5, toTimestamp(article.getModDate()));
+			pstmt.setTimestamp(5, toTimestamp(article.getModifiedDate()));
 			int insertedCount = pstmt.executeUpdate();
 			
 			if(insertedCount > 0) {
 				stmt = conn.createStatement();
 				rs = stmt.executeQuery("select last_insert_id() from article");
-				
 				if(rs.next()) {
-					Integer newNum = rs.getInt(1);	// 게시글 번호를 1부터 차근차근 올려줌
-					return new Article(newNum, article.getWriter(), article.getTitle(),
-							article.getRegDate(), article.getModDate(), 0, 0);
+					Integer newNum = rs.getInt(1);
+					return new Article(newNum,
+							article.getWriter(),
+							article.getTitle(),
+							article.getRegDate(),
+							article.getModifiedDate(), 0);
 				}
 			}
+			
 			return null;
 			
-		} finally {
-			JdbcUtil.close(rs);
-			JdbcUtil.close(stmt);
-			JdbcUtil.close(pstmt);
+		} finally { 
+		JdbcUtil.close(rs);
+		JdbcUtil.close(stmt);
+		JdbcUtil.close(pstmt);
 		}
 		
 	}
 	
-	private Timestamp toTimestamp(Date date) {
-		return new Timestamp(date.getTime());
-	}
 	public int selectCount(Connection conn) throws SQLException {
 		Statement stmt = null;
 		ResultSet rs = null;
@@ -91,6 +90,9 @@ public class ArticleDao {
 		}
 	}
 	
+	private Timestamp toTimestamp(Date date) {
+		return new Timestamp(date.getTime());
+	}
 					// convertArticle() 메서드는 ResultSet에서 데이터를 읽어 와서 Article 객체를 생성한다.
 	private Article convertArticle(ResultSet rs) throws SQLException {
 		return new Article(rs.getInt("article_no"),
@@ -98,8 +100,7 @@ public class ArticleDao {
 				rs.getString("title"),
 				toDate(rs.getTimestamp("regdate")), 
 				toDate(rs.getTimestamp("moddate")),
-				rs.getInt("read_cnt"),
-				rs.getInt("article_like"));
+				rs.getInt("read_cnt"));
 	}
 	
 	private Date toDate(Timestamp timestamp) {
@@ -131,28 +132,6 @@ public class ArticleDao {
 			pstmt.executeUpdate();
 		}
 	}
-	
-	
-	public Integer increaseLikeCount(Connection conn, int no) throws SQLException {
-		PreparedStatement pstmt = null;
-		try {
-			pstmt = conn.prepareStatement("update article set article_like = article_like + 1 " +
-					"where article_no = ?");
-			pstmt.setInt(1, no);
-			return pstmt.executeUpdate();
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if(pstmt != null) pstmt.close();
-				if(conn != null) conn.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		return -1;
-	}
-	
 	
 	public int update(Connection conn, int no, String title) throws SQLException {
 		try (PreparedStatement pstmt = 

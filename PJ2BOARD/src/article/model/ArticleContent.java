@@ -1,9 +1,9 @@
 package article.model;
 
 public class ArticleContent {
-
-	private Integer number; // 게시글 번호
-	private String content; // 게시글 내용
+	
+	private Integer number;
+	private String content;
 	
 	public ArticleContent(Integer number, String content) {
 		this.number = number;

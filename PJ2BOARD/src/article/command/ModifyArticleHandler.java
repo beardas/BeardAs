@@ -60,9 +60,9 @@ public class ModifyArticleHandler implements CommandHandler {
 		} 
 	}
 	
-	private boolean canModify(User user, ArticleData articleData) {
+	private boolean canModify(User authUser, ArticleData articleData) {
 		String writerId = articleData.getArticle().getWriter().getId();
-		return user.getId().equals(writerId);
+		return authUser.getId().equals(writerId);
 	}
 				
 	private String processSubmit(HttpServletRequest req, HttpServletResponse res)

@@ -14,30 +14,22 @@ import jdbc.connection.ConnectionProvider;
 public class WriteArticleService {
 	
 	private ArticleDao articleDao = new ArticleDao();
-	private ArticleContentDao articleContentDao = new ArticleContentDao();
+	private ArticleContentDao contentDao = new ArticleContentDao();
 	
-	public Integer write(WriteRequest wrireq) {
+	public Integer write(WriteRequest req) {
 		Connection conn = null;
-		
 		try {
 			conn = ConnectionProvider.getConnection();
 			conn.setAutoCommit(false);
 			
-			// WriteRequest에 입력된 게시글 정보를 가져옴
-			Article article = toArticle(wrireq);
-			// article 테이블에 해당 정보 insert
+			Article article = toArticle(req);
 			Article savedArticle = articleDao.insert(conn, article);
-			
-			if(savedArticle == null) { // 테이블에 저장된  게시글이 존재하지 않을 경우
+			if(savedArticle == null) {
 				throw new RuntimeException("fail to insert article");
 			}
-			
-			// 저장된 게시글의 번호와 WriteRequest의 글 내용을 가져옴
-			ArticleContent content = new ArticleContent(savedArticle.getNumber(), wrireq.getContent());
-			// article_content 테이블에 해당 정보 insert
-			ArticleContent savedContent = articleContentDao.insert(conn, content);
-			
-			if(savedContent == null) { // 테이블에 저장된  게시글 내용이 존재하지 않을 경우
+			ArticleContent content = new ArticleContent(savedArticle.getNumber(), req.getContent());
+			ArticleContent savedContent = contentDao.insert(conn, content);
+			if(savedContent == null) {
 				throw new RuntimeException("fail to insert article_content");
 			}
 			
@@ -47,18 +39,19 @@ public class WriteArticleService {
 			
 		} catch (SQLException e) {
 			JdbcUtil.rollback(conn);
-			throw new RuntimeException();
+			throw new RuntimeException(e);
+			
 		} catch (RuntimeException e) {
 			JdbcUtil.rollback(conn);
 			throw e;
+			
 		} finally {
 			JdbcUtil.close(conn);
 		}
 	}
 	
-	// Article데이터에 WriteRequest의 정보를 적용하고 작성시간과 수정시간을 현재시간으로 적용 후 반환
 	private Article toArticle(WriteRequest req) {
 		Date now = new Date();
-		return new Article(null, req.getWriter(), req.getTitle(), now, now, 0, 0);
+		return new Article(null, req.getWriter(), req.getTitle(), now, now, 0);
 	}
 }

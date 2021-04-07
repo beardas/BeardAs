@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import auth.service.DeleteMemberService;
 import auth.service.InvalideIdException;
-import auth.service.LoginFailException;
 import mvc.command.CommandHandler;
 
 public class DeleteMemberHandler implements CommandHandler {

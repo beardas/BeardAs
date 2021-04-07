@@ -26,6 +26,8 @@ public class MemberDao {
 				member = new Member(rs.getString("memberid"),
 						rs.getString("name"),
 						rs.getString("password"),
+						rs.getString("email"),
+						rs.getString("phone"),
 						toDate(rs.getTimestamp("regdate")));
 			}
 			
@@ -41,11 +43,13 @@ public class MemberDao {
 	}
 	
 	public void insert(Connection conn, Member member) throws SQLException {
-		try(PreparedStatement pstmt = conn.prepareStatement("insert into member values(?,?,?,?)")) {
+		try(PreparedStatement pstmt = conn.prepareStatement("insert into member(memberid, name, password, email, phone, regdate) values(?,?,?,?,?,?)")) {
 			pstmt.setString(1, member.getId());
 			pstmt.setString(2, member.getName());
 			pstmt.setString(3, member.getPassword());
-			pstmt.setTimestamp(4, new Timestamp(member.getRegDate().getTime())); // 아이디가 생성된 날짜를 시간만 따와서 설정
+			pstmt.setString(4, member.getEmail());
+			pstmt.setString(5, member.getPhone());
+			pstmt.setTimestamp(6, new Timestamp(member.getRegDate().getTime())); // 아이디가 생성된 날짜를 시간만 따와서 설정
 			pstmt.executeUpdate();
 		}
 	}
@@ -54,6 +58,16 @@ public class MemberDao {
 		try(PreparedStatement pstmt = conn.prepareStatement("update member set password = ? where memberid = ?")) {
 			pstmt.setString(1, member.getPassword());
 			pstmt.setString(2, member.getId());
+			pstmt.executeUpdate();
+		}
+	}
+	
+	public void updateMember(Connection conn, Member member) throws SQLException {
+		try(PreparedStatement pstmt = conn.prepareStatement("update member set name = ?, email = ?, phone = ?  where memberid = ?")) {
+			pstmt.setString(1, member.getName());
+			pstmt.setString(2, member.getEmail());
+			pstmt.setString(3, member.getPhone());
+			pstmt.setString(4, member.getId());
 			pstmt.executeUpdate();
 		}
 	}

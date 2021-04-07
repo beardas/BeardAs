@@ -4,22 +4,20 @@ import java.util.Date;
 
 public class Article {
 	
-	private Integer number; // 게시글 번호
-	private Writer writer;	// 작성자
-	private String title;	// 글 제목
-	private Date regDate;	// 작성 일자
-	private Date modDate;	// 수정 일자
-	private int readCount;	// 조회수
-	private int likeCount;  // 좋아요
+	private Integer number;
+	private Writer writer;
+	private String title;
+	private Date regDate;
+	private Date modifiedDate;
+	private int readCount;
 	
-	public Article(Integer number, Writer writer, String title, Date regDate, Date modDate, int readCount, int likeCount) {
+	public Article(Integer number, Writer writer, String title, Date regDate, Date modifiedDate, int readCount) {
 		this.number = number;
 		this.writer = writer;
 		this.title = title;
 		this.regDate = regDate;
-		this.modDate = modDate;
+		this.modifiedDate = modifiedDate;
 		this.readCount = readCount;
-		this.likeCount = likeCount;
 	}
 
 	public Integer getNumber() {
@@ -38,15 +36,11 @@ public class Article {
 		return regDate;
 	}
 
-	public Date getModDate() {
-		return modDate;
+	public Date getModifiedDate() {
+		return modifiedDate;
 	}
 
 	public int getReadCount() {
 		return readCount;
-	}
-	
-	public int getLikeCount() {
-		return likeCount;
 	}
 }

@@ -28,9 +28,8 @@ public class WriteRequest {
 		return content;
 	}
 	
-	// 글 제목이 null이거나 비어있을경우 title에러 발생
 	public void validate(Map<String, Boolean> errors) {
-		if(title == null || title.isEmpty()) {
+		if(title == null || title.trim().isEmpty()) {
 			errors.put("title", Boolean.TRUE);
 		}
 	}

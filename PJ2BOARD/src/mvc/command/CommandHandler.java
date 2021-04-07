@@ -3,12 +3,11 @@ package mvc.command;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-		// CommandHandler ÀÎÅÍÆäÀÌ½º¸¦ Á¤ÀÇÇÑ´Ù.
+		// CommandHandler ì¸í„°í˜ì´ìŠ¤ë¥¼ ì •ì˜í•œë‹¤.
 public interface CommandHandler {
-		// ¸ğµç ¸í·É¾î ÇÚµé·¯ Å¬·¡½º°¡ °øÅëÀ¸·Î ±¸ÇöÇØ¾ß ÇÏ´Â process ¸Ş¼­µå ¼±¾ğ
-		// ¸í·É¾î ÇÚµé·¯ Å¬·¡½º´Â process ¸Ş¼­µå¸¦ ÀÌ¿ëÇØ¼­ ¾Ë¸ÂÀº ·ÎÁ÷ ÄÚµå¸¦ ±¸ÇöÇÏ°í,
-		// °á°ú¸¦ º¸¿©ÁÙ JSPÀÇ URI¸¦ ¸®ÅÏÇÔ.
+		// ëª¨ë“  ëª…ë ¹ì–´ í•¸ë“¤ëŸ¬ í´ë˜ìŠ¤ê°€ ê³µí†µìœ¼ë¡œ êµ¬í˜„í•´ì•¼ í•˜ëŠ” process ë©”ì„œë“œ ì„ ì–¸
+		// ëª…ë ¹ì–´ í•¸ë“¤ëŸ¬ í´ë˜ìŠ¤ëŠ” process ë©”ì„œë“œë¥¼ ì´ìš©í•´ì„œ ì•Œë§ì€ ë¡œì§ ì½”ë“œë¥¼ êµ¬í˜„í•˜ê³ ,
+		// ê²°ê³¼ë¥¼ ë³´ì—¬ì¤„ JSPì˜ URIë¥¼ ë¦¬í„´í•¨.
 	public String process(HttpServletRequest req, HttpServletResponse res) throws Exception;
 	
 }
-

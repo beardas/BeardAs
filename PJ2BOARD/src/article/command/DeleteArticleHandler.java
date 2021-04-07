@@ -38,19 +38,19 @@ public class DeleteArticleHandler implements CommandHandler {
 	
 	private String processForm(HttpServletRequest req, HttpServletResponse res) throws IOException {
 		try {
-			User user = (User) req.getSession().getAttribute("user");
+			User authUser = (User) req.getSession().getAttribute("user");
 			String noVal = req.getParameter("no");
 			int no = Integer.parseInt(noVal);
 			String pw = req.getParameter("password");
 			
 			ArticleData articleData = readService.getArticle(no, false);
 			// 현재 로그인한 사용자가 게시글의 작성자가 아니면 
-			if(!canModify(user, articleData)) {
+			if(!canModify(authUser, articleData)) {
 				res.sendError(HttpServletResponse.SC_FORBIDDEN); // 403 응답 전송(서버 응답 실행 거부)
 				return null;
 			}
 			
-			DeleteRequest delReq = new DeleteRequest(user.getId(), no, pw);
+			DeleteRequest delReq = new DeleteRequest(authUser.getId(), no, pw);
 			
 			
 			req.setAttribute("delReq", delReq);
@@ -63,20 +63,20 @@ public class DeleteArticleHandler implements CommandHandler {
 		} 
 	}
 	
-	private boolean canModify(User user, ArticleData articleData) {
+	private boolean canModify(User authUser, ArticleData articleData) {
 		String writerId = articleData.getArticle().getWriter().getId();
-		return user.getId().equals(writerId);
+		return authUser.getId().equals(writerId);
 	}
 				
 	private String processSubmit(HttpServletRequest req, HttpServletResponse res)
 			throws Exception {
 		// 게시글 삭제를 요청한 사용자의 비밀번호, 유저 정보, 게시글 번호를 가져옴
 		String password = trim(req.getParameter("password"));
-		User user = (User) req.getSession().getAttribute("user");
+		User authUser = (User) req.getSession().getAttribute("user");
 		String noVal = req.getParameter("no");
 		int no = Integer.parseInt(noVal);
 		
-		DeleteRequest delReq = new DeleteRequest(user.getId(), no, password);
+		DeleteRequest delReq = new DeleteRequest(authUser.getId(), no, password);
 		// DeleteRequest 객체를 request을 delReq 속성에 저장
 		req.setAttribute("delReq", delReq);
 

@@ -8,6 +8,8 @@ public class JoinRequest {
 	private String name;
 	private String password;
 	private String password2; // 비밀번호 확인
+	private String email;
+	private String phone;
 	
 	
 	public String getId() {
@@ -42,6 +44,22 @@ public class JoinRequest {
 		this.password2 = password2;
 	}
 	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
 	public boolean confirmPw() { // 비밀번호와 비밀번호 확인이 일치하는지 검사(일치하면 true)
 		return password.equals(password2) && password != null;
 	}
@@ -51,6 +69,8 @@ public class JoinRequest {
 		checkEmpty(errors, name, "name");
 		checkEmpty(errors, password, "password");
 		checkEmpty(errors, password2, "password2");
+		checkEmpty(errors, email, "email");
+		checkEmpty(errors, phone, "phone");
 		if (!errors.containsKey("password2")) {
 			if(!confirmPw()) {
 				errors.put("pwNotMatch", Boolean.TRUE);
