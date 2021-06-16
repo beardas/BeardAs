@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+
+   <definition name="base" template="/WEB-INF/jsp/layout/base.jsp">
+       <put-attribute name="header" value="/WEB-INF/jsp/layout/header.jsp" />
+       <put-attribute name="body" value="" />
+   </definition>
+   
+   <definition name="baseAPI" template="/WEB-INF/jsp/layout/baseAPI.jsp">
+       <put-attribute name="header" value="/WEB-INF/jsp/layout/header.jsp" />
+       <put-attribute name="body" value="" />
+   </definition>
+   
+    
+   <definition name="baseFeed" template="/WEB-INF/jsp/layout/baseFeed.jsp">
+       <put-attribute name="headerFeed" value="/WEB-INF/jsp/layout/headerFeed.jsp" />
+       <put-attribute name="body" value="" />
+   </definition>
+   
+	<definition name="resultBody" extends="base">
+		<put-attribute name="body" value="/WEB-INF/jsp/common/resultBody.jsp" />
+	</definition>
+	
+	<definition name="login" extends="base">
+		<put-attribute name="body" value="/WEB-INF/jsp/member/login.jsp" />
+	</definition>
+
+	<definition name="memberList" extends="base">
+		<put-attribute name="body" value="/WEB-INF/jsp/member/memberList.jsp" />
+	</definition>
+
+	<definition name="myResult" extends="base">
+		<put-attribute name="body" value="/WEB-INF/jsp/member/myResult.jsp" />
+	</definition>
+
+	<definition name="changePassword" extends="base">
+		<put-attribute name="body" value="/WEB-INF/jsp/member/changePassword.jsp" />
+	</definition>
+
+	<definition name="index" extends="base">
+		<put-attribute name="body" value="/WEB-INF/jsp/index.jsp" />
+	</definition>
+
+	<definition name="findId" extends="base">
+		<put-attribute name="body" value="/WEB-INF/jsp/member/findId.jsp" />
+	</definition>
+
+	<definition name="findPw" extends="base">
+		<put-attribute name="body" value="/WEB-INF/jsp/member/findPw.jsp" />
+	</definition>
+	
+	<definition name="memberReg" extends="base">
+		<put-attribute name="body" value="/WEB-INF/jsp/member/memberReg.jsp" />
+	</definition>
+	
+	<definition name="memberUpt" extends="base">
+		<put-attribute name="body" value="/WEB-INF/jsp/member/memberUpt.jsp" />
+	</definition>
+	
+	<definition name="addressAPIPopup" extends="baseAPI">
+		<put-attribute name="body" value="/WEB-INF/jsp/member/addressAPIPopup.jsp" />
+	</definition>
+	
+	<definition name="naverLogin" extends="baseAPI">
+		<put-attribute name="body" value="/WEB-INF/jsp/common/naverLogin.jsp" />
+	</definition>
+	
+	<definition name="naverCallback" extends="baseAPI">
+		<put-attribute name="body" value="/WEB-INF/jsp/common/naverCallback.jsp" />
+	</definition>
+	
+	<definition name="kakaoLogin" extends="baseAPI">
+		<put-attribute name="body" value="/WEB-INF/jsp/common/kakaoLogin.jsp" />
+	</definition>
+	
+	<definition name="kakaoCallback" extends="baseAPI">
+		<put-attribute name="body" value="/WEB-INF/jsp/common/kakaoCallback.jsp" />
+	</definition>
+	
+	<definition name="kakaoLogout" extends="baseAPI">
+		<put-attribute name="body" value="/WEB-INF/jsp/common/kakaoLogout.jsp" />
+	</definition>
+	
+	
+	<definition name="location" extends="base">
+		<put-attribute name="body" value="/WEB-INF/jsp/where/location.jsp" />
+	</definition>
+	
+	<definition name="addressAPIPopup" extends="baseAPI">
+		<put-attribute name="body" value="/WEB-INF/jsp/member/addressAPIPopup.jsp" />
+	</definition>
+
+	<definition name="boardList" extends="base">
+		<put-attribute name="body" value="/WEB-INF/jsp/board/boardList.jsp" />
+	</definition>
+	
+	<definition name="boardView" extends="base">
+		<put-attribute name="body" value="/WEB-INF/jsp/board/boardView.jsp" />
+	</definition>
+	
+	<definition name="boardReg" extends="base">
+		<put-attribute name="body" value="/WEB-INF/jsp/board/boardReg.jsp" />
+	</definition>
+	
+	<definition name="boardUpt" extends="base">
+		<put-attribute name="body" value="/WEB-INF/jsp/board/boardUpt.jsp" />
+	</definition>
+	
+	<definition name="noticeList" extends="base">
+		<put-attribute name="body" value="/WEB-INF/jsp/notice/noticeList.jsp" />
+	</definition>
+	
+	<definition name="noticeView" extends="base">
+		<put-attribute name="body" value="/WEB-INF/jsp/notice/noticeView.jsp" />
+	</definition>
+	
+	<definition name="noticeReg" extends="base">
+		<put-attribute name="body" value="/WEB-INF/jsp/notice/noticeReg.jsp" />
+	</definition>
+	
+	<definition name="kakaomap" extends="base">
+		<put-attribute name="body" value="/WEB-INF/jsp/map/kakaomap.jsp" />
+	</definition>
+	
+	<definition name="foodList" extends="base">
+		<put-attribute name="body" value="/WEB-INF/jsp/map/foodList.jsp" />
+	</definition>
+	
+	<definition name="foodView" extends="base">
+		<put-attribute name="body" value="/WEB-INF/jsp/map/foodView.jsp" />
+	</definition>
+	
+	<definition name="foodUpt" extends="base">
+		<put-attribute name="body" value="/WEB-INF/jsp/map/foodUpt.jsp" />
+	</definition>
+	
+	<definition name="randomStoreInfo" extends="base">
+		<put-attribute name="body" value="/WEB-INF/jsp/map/randomStoreInfo.jsp" />
+	</definition>
+
+	<definition name="locationPopup" extends="base">
+		<put-attribute name="body" value="/WEB-INF/jsp/where/locationPopup.jsp" />
+	</definition>
+
+	<definition name="fashionList" extends="base">
+		<put-attribute name="body" value="/WEB-INF/jsp/fashion/fashionList.jsp" />
+	</definition>
+
+	
+	
+	<definition name="noticeUpt" extends="base">
+		<put-attribute name="body" value="/WEB-INF/jsp/notice/noticeUpt.jsp" />
+	</definition>
+</tiles-definitions>
