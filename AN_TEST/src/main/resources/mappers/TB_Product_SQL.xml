@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 맵핑될 DAO 인터페이스의 Full name 을 줍니다. -->
+<!-- <mapper namespace="com.test.dao.ProductDAO"> -->
+<mapper namespace="ProductDAO">
+
+ 	<resultMap type="productVO" id="productResult">
+		<id column="IDX" property="idx"/>
+		<result column="UUID" property="uuid"/>
+		<result column="PRODUCT_NAME" property="productName"/>
+		<result column="CATEGORY" property="categoty"/>
+		<result column="PRICE" property="price"/>
+		<result column="CNT" property="cnt"/>
+		<result column="REG_DATE" property="regDate"/>
+		<result column="WRITER" property="writer"/>
+	</resultMap>
+	
+<!-- id 속성은 DAO 의 메소드와 같아야 한다. 여기의 boardVO 는 mybatis-confg.xml 에 Alias 되어 있습니다. -->
+ <select id="selectProductList" resultType="productVO">
+  <![CDATA[
+  SELECT IDX
+       , UUID
+       , PRODUCT_NAME
+       , CATEGORY
+       , PRICE
+       , CNT
+       , REG_DATE
+       , WRITER
+       FROM TB_PRODUCT
+   ORDER BY IDX DESC
+   ]]>
+ </select>
+ 
+ <select id="selectProductListPaging" resultType="productVO">
+    <![CDATA[
+        select IDX, UUID, PRODUCT_NAME, CATEGORY, PRICE, CNT, REG_DATE, WRITER from(
+        		
+        		select rn, IDX, UUID, PRODUCT_NAME, CATEGORY, PRICE, CNT, REG_DATE, WRITER from(
+        		
+                select ROW_NUMBER() OVER (ORDER BY idx DESC) AS rn, IDX, UUID, PRODUCT_NAME, CATEGORY, PRICE, CNT, REG_DATE, WRITER
+                  
+                from TB_PRODUCT ORDER BY rn DESC) where rn <= #{pageNum} * #{amount} ORDER BY rn) 
+                
+        where rn > (#{pageNum} -1) * #{amount}
+    ]]>
+    </select>
+ 
+<insert id="insertProduct" parameterType="productVO">
+ 	<![CDATA[
+	INSERT INTO TB_PRODUCT(IDX, UUID, PRODUCT_NAME, CATEGORY, PRICE, CNT, REG_DATE, WRITER) 
+	VALUES((SELECT NVL(MAX(IDX), 0) + 1 FROM TB_PRODUCT), #{uuid}, #{productName}, #{category}, #{price}, #{cnt}, sysdate, #{writer})
+	]]>
+ </insert>
+ 
+<delete id="deleteProduct" parameterType="java.util.Arrays">
+ 	
+	DELETE FROM TB_PRODUCT
+	<where>
+	IDX IN(
+	<foreach collection="idxs" item="idxs" separator=",">
+ 	#{idxs}
+	</foreach>
+	)
+	</where>
+
+</delete>
+ 
+
+</mapper>
