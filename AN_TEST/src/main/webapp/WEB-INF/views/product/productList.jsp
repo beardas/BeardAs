@@ -167,7 +167,7 @@ function fn_delete(){
 		}
 	}
 
-	if(chooseRecordCount < 1){  <%-- 예) 3이니 알림문은 뜨지 않음1 --%>
+	if(chooseRecordCount < 1){  <%-- 예) 3이니 알림문은 뜨지 않음 --%>
 		alert("삭제할 상품을 체크하세요.");
 		return;
 	}
